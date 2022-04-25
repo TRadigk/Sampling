@@ -34,10 +34,11 @@ public class MeasurementSampler
         var measurementsForType = unsampledMeasurements.Where(measurement => measurement.Type == measurementType);
 
         var measurementsSortedByTimeStamp = from measurement in measurementsForType
-                                            orderby measurement.MeasurementTime
+                                            orderby measurement.MeasurementTime descending
                                             select measurement;
 
         var sampledElements = FilterMeasurementData(startOfSampling, measurementsSortedByTimeStamp);
+
         return sampledElements;
     }
 
@@ -46,7 +47,7 @@ public class MeasurementSampler
                                                            IEnumerable<Measurement> measurements)
     {
         var measurementList = new List<Measurement>(measurements);
-        List<Measurement> sampled = new();
+        List<Measurement> sampledData = new();
         var lastSamplingTimeStamp = DateTime.MinValue;
 
         foreach ((var measurementTime, double measurementValue, var measurementType) in measurementList)
@@ -54,20 +55,20 @@ public class MeasurementSampler
             var actualSamplingTimeStamp = GetSamplingTimeStamp(measurementTime, SamplingTimeSpan);
             bool isTooOld = measurementTime < startOfSampling;
             bool isAlreadySampled = actualSamplingTimeStamp == lastSamplingTimeStamp;
+
             if (isTooOld || isAlreadySampled)
             {
                 continue;
             }
 
-            var newMeasurement =
-                new Measurement(actualSamplingTimeStamp, measurementValue, measurementType);
-            sampled.Add(newMeasurement);
             lastSamplingTimeStamp = actualSamplingTimeStamp;
+            var measurementWithNewTimeStamp =
+                new Measurement(actualSamplingTimeStamp, measurementValue, measurementType);
+            sampledData.Insert(0, measurementWithNewTimeStamp);
         }
 
-        return sampled;
+        return sampledData;
     }
-
 
     internal static DateTime GetSamplingTimeStamp(DateTime timeStamp, TimeSpan gridSpan)
     {
