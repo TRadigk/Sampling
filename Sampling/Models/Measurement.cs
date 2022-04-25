@@ -4,20 +4,8 @@ using System.Text;
 
 namespace Sampling.Models;
 
-public record Measurement
+public record Measurement(DateTime MeasurementTime, double MeasurementValue, MeasurementType Type)
 {
-    public DateTime MeasurementTime { get; }
-    public Double MeasurementValue { get; }
-    public MeasurementType Type { get; }
-
-    public Measurement(DateTime measurementTime, double measurementValue, MeasurementType type)
-    {
-        MeasurementTime = measurementTime;
-        MeasurementValue = measurementValue;
-        Type = type;
-    }
-
-
     /// <inheritdoc />
     public override string ToString()
     {
