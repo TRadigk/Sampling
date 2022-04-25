@@ -33,7 +33,9 @@ public class MeasurementSampler
     {
         var measurementsForType = unsampledMeasurements.Where(measurement => measurement.Type == measurementType);
 
-        var measurementsSortedByTimeStamp = from m in measurementsForType orderby m.MeasurementTime ascending select m;
+        var measurementsSortedByTimeStamp = from measurement in measurementsForType
+                                            orderby measurement.MeasurementTime
+                                            select measurement;
 
         var sampledElements = FilterMeasurementData(startOfSampling, measurementsSortedByTimeStamp);
         return sampledElements;
@@ -45,12 +47,12 @@ public class MeasurementSampler
     {
         var measurementList = new List<Measurement>(measurements);
         List<Measurement> sampled = new();
-        DateTime lastSamplingTimeStamp = DateTime.MinValue;
+        var lastSamplingTimeStamp = DateTime.MinValue;
 
-        foreach (var measurement in measurementList)
+        foreach ((var measurementTime, double measurementValue, var measurementType) in measurementList)
         {
-            var actualSamplingTimeStamp = GetSamplingTimeStamp(measurement.MeasurementTime, SamplingTimeSpan);
-            bool isTooOld = measurement.MeasurementTime < startOfSampling;
+            var actualSamplingTimeStamp = GetSamplingTimeStamp(measurementTime, SamplingTimeSpan);
+            bool isTooOld = measurementTime < startOfSampling;
             bool isAlreadySampled = actualSamplingTimeStamp == lastSamplingTimeStamp;
             if (isTooOld || isAlreadySampled)
             {
@@ -58,7 +60,7 @@ public class MeasurementSampler
             }
 
             var newMeasurement =
-                new Measurement(actualSamplingTimeStamp, measurement.MeasurementValue, measurement.Type);
+                new Measurement(actualSamplingTimeStamp, measurementValue, measurementType);
             sampled.Add(newMeasurement);
             lastSamplingTimeStamp = actualSamplingTimeStamp;
         }

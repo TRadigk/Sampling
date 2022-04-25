@@ -6,13 +6,6 @@ namespace Sampling.Tests
     [TestClass]
     public class DateTesting
     {
-        private MeasurementSampler _sut = null!;
-
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            _sut = new MeasurementSampler();
-        }
 
         [TestMethod]
         public void TestStartMinute()
@@ -22,7 +15,6 @@ namespace Sampling.Tests
 
             result = MeasurementSampler.GetSamplingTimeStamp(DateTime.Parse("2016-05-11T20:10:33"), TimeSpan.FromMinutes(5));
             Assert.AreEqual(15, result.Minute);
-
 
             result = MeasurementSampler.GetSamplingTimeStamp(DateTime.Parse("2016-05-11T20:53:33"), TimeSpan.FromMinutes(5));
             Assert.AreEqual(55, result.Minute);
