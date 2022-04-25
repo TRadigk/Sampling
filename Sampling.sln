@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32414.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sampling", "Sampling\Sampling.csproj", "{8DA87D65-3147-439A-903E-298E209B78FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sampling", "Sampling\Sampling.csproj", "{8DA87D65-3147-439A-903E-298E209B78FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sampling.Tests", "Sampling.Tests\Sampling.Tests.csproj", "{38A21895-7E31-42EF-B51A-4738C50AB20B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sampling.Tests", "Sampling.Tests\Sampling.Tests.csproj", "{38A21895-7E31-42EF-B51A-4738C50AB20B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{305A1227-32A5-4091-A778-1792CCEF6DF5}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
